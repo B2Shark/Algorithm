@@ -24,16 +24,23 @@ BST::node_t* BST::newNode(int value){
 /* Inserts a new value into a given binary search tree, 
  * allocating heap memory for it.
  */
-BST::node_t* BST::insert(node_t* cur_root, int value){
+BST::node_t* BST::insert(int value){
     if(root == nullptr)
         return (root = newNode(value));
+    
+    node_t* cur_node = root;
+    return sp_insert(cur_node,value);
+    
+}
+BST::node_t* BST::sp_insert(node_t* cur_root, int value){
+    
     if(cur_root == nullptr)
         return (cur_root = newNode(value));
     
     if(value < cur_root->data)
-        cur_root->left = insert(cur_root->left,value);
+        cur_root->left = sp_insert(cur_root->left,value);
     else if(value > cur_root->data)
-        cur_root->right = insert(cur_root->right,value);
+        cur_root->right = sp_insert(cur_root->right,value);
     return cur_root;
 }
 
@@ -61,14 +68,18 @@ BST::node_t* BST::find_max(node_t* _root){
     return _root;
 }
 
-BST::node_t* BST::delete_node(node_t* _root, int value){
+BST::node_t* BST::delete_node(int value){
+    node_t* cur_node = root;
+    return sp_delete_node(cur_node,value);
+}
+BST::node_t* BST::sp_delete_node(node_t* _root, int value){
     if(_root == nullptr)
         return nullptr;
     else if(value < _root->data){
-        _root->left = delete_node(_root->left,value);
+        _root->left = sp_delete_node(_root->left,value);
     }
     else if(value > _root->data){
-        _root->right = delete_node(_root->right,value);
+        _root->right = sp_delete_node(_root->right,value);
     }
     else{
         //No child
@@ -91,7 +102,7 @@ BST::node_t* BST::delete_node(node_t* _root, int value){
         else if(_root->left != nullptr && _root->right != nullptr){
             node_t* temp = find_max(_root->left);
             _root->data = temp->data;
-            _root->left = delete_node(_root->left,temp->data);
+            _root->left = sp_delete_node(_root->left,temp->data);
         }
     }
     return _root;
@@ -112,6 +123,10 @@ void BST::delete_bst(node_t* _root){
 /* Given a pointer to the root, prints all of
  * the values in a tree.
  */
+void BST::print(){
+    node_t* cur_node = root;
+    print_bst(cur_node);
+}
 void BST::print_bst(node_t* _root){
     if(_root != nullptr){
         cout<< _root->data << "\t";

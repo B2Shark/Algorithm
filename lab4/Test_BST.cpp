@@ -2,20 +2,19 @@
 
 int main(){
     BST* tree = new BST();
-    tree->insert(tree->get_root(),10);
-    tree->insert(tree->get_root(),5);
-    tree->insert(tree->get_root(),15);
-    tree->insert(tree->get_root(),3);
-    tree->insert(tree->get_root(),1);
-    tree->insert(tree->get_root(),12);
-    tree->insert(tree->get_root(),17);
-    tree->insert(tree->get_root(),19);
+    tree->insert(10);
+    tree->insert(5);
+    tree->insert(15);
+    tree->insert(3);
+    tree->insert(1);
+    tree->insert(12);
+    tree->insert(17);
+    tree->insert(19);
 
-    tree->print_bst(tree->get_root());
+    tree->print();
     cout<<endl;
 
-    //tree->delete_node(tree->get_root(),15);
-    //cout<< tree->find_max(tree->get_root())->data;
-    //tree->print_bst(tree->get_root());
-    cout<<tree->minVal_even(tree->get_root());
+    tree->delete_node(15);
+    tree->print();
+    //cout<<tree->minVal_even(tree->get_root());
 }
